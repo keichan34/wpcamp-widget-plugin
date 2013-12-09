@@ -1,0 +1,1 @@
+<a href="<?php echo $banner_obj->href; ?>" target="_blank"><img src="<?php echo $banner_obj->banner; ?>" width="<?php echo $banner_obj->width; ?>" height="<?php echo $banner_obj->height; ?>" alt="<?php echo $banner_obj->alt; ?>" title="<?php echo $banner_obj->alt; ?>" /></a>
