@@ -30,7 +30,7 @@ class WordCampWidgetPlugin {
   }
 
   function api_url() {
-    return 'https://wpcamp-api.herokuapp.com';
+    return 'https://wpcamp-api.herokuapp.com/v1';
   }
 
   function widgets_init() {
