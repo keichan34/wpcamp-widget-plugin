@@ -94,6 +94,14 @@ class WordCampWidgetPlugin {
 
   private function data_for_location_and_attrs($location, $attrs) {
     $url = $this->url_for_location(strtolower($location));
+    return $this->response_for_url_and_attrs($url, $attrs);
+  }
+
+  private function url_for_location($location) {
+    return $this->api_url() . "/wordcamps/location/{$location}.json";
+  }
+
+  private function response_for_url_and_attrs($url, $attrs) {
     $url .= '?';
     $url .= implode('&', array_map(function($key, $value) {
       return $key . '=' . urlencode($value);
@@ -102,10 +110,6 @@ class WordCampWidgetPlugin {
     $response = json_decode(file_get_contents($url));
 
     return $response;
-  }
-
-  private function url_for_location($location) {
-    return $this->api_url() . "/wordcamps/location/{$location}.json";
   }
 
 };
