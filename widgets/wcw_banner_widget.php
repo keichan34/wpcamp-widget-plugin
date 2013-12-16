@@ -113,4 +113,9 @@ class WCW_Banner_Widget extends WP_Widget {
 
     return $instance;
   }
+
+  private function wc_location_array() {
+    global $wcw_plugin;
+    return $wcw_plugin->wc_location_array();
+  }
 };

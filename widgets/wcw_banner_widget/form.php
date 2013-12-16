@@ -1,6 +1,12 @@
 <p>
-  <label for="<?php echo $this->get_field_id('location'); ?>"><?php _e('WordCamp Location Slug:', 'wpcamp-widget-plugin'); ?></label>
-  <input class="widefat" type="text" id="<?php echo $this->get_field_id('location'); ?>" name="<?php echo $this->get_field_name('location'); ?>" value="<?php echo esc_attr($location); ?>" >
+  <label for="<?php echo $this->get_field_id('location'); ?>"><?php _e('WordCamp Location:', 'wpcamp-widget-plugin'); ?></label>
+  <select class="widefat wcw-location-select" name="<?php echo $this->get_field_name('location'); ?>" id="<?php echo $this->get_field_id('location'); ?>">
+    <?php
+    $locations = $this->wc_location_array();
+    foreach ($locations as $_location): ?>
+      <option value="<?php echo $_location->slug; ?>" <?php if ($location === $_location->slug) { echo 'selected="selected"'; } ?>><?php echo $_location->title; ?></option>
+    <?php endforeach; ?>
+  </select>
 </p>
 <p>
   <label for="<?php echo $this->get_field_id('year'); ?>"><?php _e('WordCamp Year:', 'wpcamp-widget-plugin'); ?></label>
@@ -8,7 +14,7 @@
 </p>
 <p>
   <?php if ( false === $wordcamp_data ): ?>
-    <?php _e('The associated WordCamp data was not found or hasn\'t been synced yet. Please enter the "Location Slug" and "Year", then click "Save" to see the available banners.', 'wpcamp-widget-plugin'); ?>
+    <?php _e('The associated WordCamp data was not found or hasn\'t been synced yet. Please enter the "Location" and "Year", then click "Save" to see the available banners.', 'wpcamp-widget-plugin'); ?>
   <?php else: ?>
     <?php if (count($wordcamp_data->banners) > 0): ?>
       <?php foreach($wordcamp_data->banners as $banner_obj): $id = $this->get_field_id('banner_' . $banner_obj->guid); ?>
@@ -22,3 +28,6 @@
     <?php endif; ?>
   <?php endif; ?>
 </p>
+<script>
+  jQuery(document).trigger('reload-wcw-location-selects');
+</script>
