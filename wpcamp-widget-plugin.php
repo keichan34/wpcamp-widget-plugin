@@ -47,8 +47,7 @@ class WordCampWidgetPlugin {
     wp_register_script( 'wpcamp-api-admin-script', $this->js_url('admin'), array('jquery'), WCW_VERSION );
 
     wp_localize_script( 'wpcamp-api-admin-script', 'WCW_Admin', array(
-      'ajaxurl' => admin_url( 'admin-ajax.php' ),
-      'data_fetch_error' => __( "We're sorry, but the WordCamp information was not available. Please try again.", 'wpcamp-widget-plugin' )
+      'select_location_year_placeholder' => __('-- Select Year --', 'wpcamp-widget-plugin')
     ));
 
     wp_enqueue_script( 'wpcamp-api-admin-script' );

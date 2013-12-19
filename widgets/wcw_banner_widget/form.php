@@ -1,16 +1,32 @@
+<?php
+$locations = $this->wc_location_array();
+$locations_hash = array();
+foreach ($locations as $_location) {
+  sort($_location->years);
+  $locations_hash[$_location->title_for_slug] = array(
+    'name' => $_location->name,
+    'years' => $_location->years
+  );
+}
+?>
 <p>
   <label for="<?php echo $this->get_field_id('location'); ?>"><?php _e('WordCamp Location:', 'wpcamp-widget-plugin'); ?></label>
   <select class="widefat wcw-location-select" name="<?php echo $this->get_field_name('location'); ?>" id="<?php echo $this->get_field_id('location'); ?>">
     <?php
-    $locations = $this->wc_location_array();
     foreach ($locations as $_location): ?>
-      <option value="<?php echo $_location->slug; ?>" <?php if ($location === $_location->slug) { echo 'selected="selected"'; } ?>><?php echo $_location->title; ?></option>
+      <option value="<?php echo esc_attr($_location->title_for_slug); ?>" <?php if ($location === $_location->title_for_slug) { echo 'selected="selected"'; } ?>><?php echo $_location->name; ?></option>
     <?php endforeach; ?>
   </select>
 </p>
 <p>
   <label for="<?php echo $this->get_field_id('year'); ?>"><?php _e('WordCamp Year:', 'wpcamp-widget-plugin'); ?></label>
-  <input class="widefat" type="text" id="<?php echo $this->get_field_id('year'); ?>" name="<?php echo $this->get_field_name('year'); ?>" value="<?php echo esc_attr($year); ?>" >
+  <select class="widefat wcw-location-year-select" name="<?php echo $this->get_field_name('year'); ?>" id="<?php echo $this->get_field_id('year'); ?>">
+    <?php if (!empty($year) && !empty($location) && array_key_exists($location, $locations_hash)): ?>
+      <?php foreach ($locations_hash[$location]['years'] as $_year): ?>
+        <option value="<?php echo $_year; ?>" <?php if (intval($year) === intval($_year)) { echo 'selected="selected"'; } ?>><?php echo $_year; ?></option>
+      <?php endforeach; ?>
+    <?php endif; ?>
+  </select>
 </p>
 <p>
   <?php if ( false === $wordcamp_data ): ?>
@@ -29,5 +45,5 @@
   <?php endif; ?>
 </p>
 <script>
-  jQuery(document).trigger('reload-wcw-location-selects');
+  window.wcw_location_array = <?php echo json_encode($locations_hash); ?>;
 </script>
